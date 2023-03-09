@@ -4,6 +4,7 @@
 
 [[ $(tail -c1 cvDataRepos.md) && ! $(echo) ]] && echo >> cvDataRepos.md
 
+mkdir -p cvData
 
 while read line; do link="https://github.com/${line%%#*}"; link=$(echo $link| sed 's/[[:space:]]*$//'); dir=$(echo "$link" | sed 's/\//__/g');link=$(echo "$link.git"); cd cvData && rm -rf $dir && git clone $link $dir; cd ..; done < cvDataRepos.md 
 
