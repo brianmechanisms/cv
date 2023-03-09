@@ -1,35 +1,38 @@
 name: Build and deploy to GitHub Pages
 
-# on:
-#   push:
-#     branches: [ master ]
-#   pull_request:
-#     branches: [ master ]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
-# jobs:
-#   github-pages:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - uses: helaili/jekyll-action@v2
-#         with:
-#           token: ${{ secrets.GITHUB_TOKEN }}
-#           target_branch: 'gh-pages'
-# name: Jekyll Deploy
-
-on: [push]
-
-jobs: 
-  build_and_deploy:
+jobs:
+  github-pages:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: prep
         run: |
           ./cvProcessor.sh 
-      - name: Build & Deploy to GitHub Pages
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
-          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
-        uses: BryanSchuetz/jekyll-deploy-gh-pages@master
+      - uses: helaili/jekyll-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target_branch: 'gh-pages'
+# name: Jekyll Deploy
+
+# on: [push]
+
+# jobs: 
+#   build_and_deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v1
+#       - name: prep
+#         run: |
+#           ./cvProcessor.sh 
+#       - name: Build & Deploy to GitHub Pages
+#         env: 
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
+#           GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+#         uses: BryanSchuetz/jekyll-deploy-gh-pages@master
